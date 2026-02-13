@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine? 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg-gradient: linear-gradient(135deg, #2e001f 0%, #680026 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-gradient);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+/* Glass Container */
+.container {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 2.5rem;
+    border-radius: 25px;
+    text-align: center;
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+}
+
+h1 {
+    font-family: 'Parisienne', cursive;
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+p {
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    color: #ddd;
+}
+
+/* Buttons */
+.btn {
+    padding: 12px 35px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin: 10px;
+    font-weight: 600;
+    transition: 0.3s;
+    background: linear-gradient(45deg, #ff3366, #ff6b6b);
+    color: white;
+}
+
+#noBtn {
+    background: #444;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+}
+
+/* Music Button */
+.music-control {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.1);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+/* Confetti */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Will You Be My Valentine? 🌹</h1>
+    <p>You are my sunshine, my joy, and my everything.</p>
+
+    <button class="btn" onclick="acceptProposal()">YES! 😍</button>
+    <button class="btn" id="noBtn"
+        onmouseover="dodgeButton()"
+        ontouchstart="dodgeButton()">No 😢</button>
+</div>
+
+<audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3" type="audio/mp3">
+</audio>
+
+<div class="music-control" onclick="toggleMusic()">🎵</div>
+
+<script>
+
+const music = document.getElementById("bgMusic");
+let isPlaying = false;
+
+function toggleMusic() {
+    if (isPlaying) {
+        music.pause();
+    } else {
+        music.play().catch(()=>{});
+    }
+    isPlaying = !isPlaying;
+}
+
+/* Move NO button */
+function dodgeButton() {
+    const btn = document.getElementById("noBtn");
+
+    const x = Math.random() * (window.innerWidth - 200);
+    const y = Math.random() * (window.innerHeight - 100);
+
+    btn.style.position = "fixed";
+    btn.style.left = x + "px";
+    btn.style.top = y + "px";
+}
+
+/* YES action */
+function acceptProposal() {
+    alert("She said YES! 💖");
+    triggerConfetti();
+}
+
+/* Confetti */
+function triggerConfetti() {
+    const colors = ['#ff0000','#00ff00','#0000ff','#ffff00','#ff00ff'];
+
+    for (let i = 0; i < 120; i++) {
+        const div = document.createElement("div");
+        div.classList.add("confetti");
+        div.style.left = Math.random() * 100 + "vw";
+        div.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+        document.body.appendChild(div);
+
+        div.animate([
+            { transform: "translateY(0)", opacity: 1 },
+            { transform: "translateY(100vh)", opacity: 0 }
+        ], {
+            duration: Math.random()*2000 + 2000,
+            easing: "linear",
+            fill: "forwards"
+        });
+    }
+}
+
+</script>
+
+</body>
+</html>
